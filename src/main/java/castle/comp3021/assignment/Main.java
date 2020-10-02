@@ -28,18 +28,14 @@ public class Main {
      */
     public static Game createGame(int size, int numMovesProtection) {
         // TODO student implementation
-        // The following lines are example of constructing a game object, you may modify them as you wish.
         var userPlayer = new ConsolePlayer("UserPlayer");
         var computerPlayer = new RandomPlayer("ComputerPlayer");
-        // we give
-        Configuration configuration = new Configuration(size, new Player[]{userPlayer, computerPlayer}, numMovesProtection);
+        Configuration JesonMor = new Configuration(size, new Player[]{userPlayer, computerPlayer}, numMovesProtection);
         var knight1 = new Knight(userPlayer);
         var knight2 = new Knight(computerPlayer);
-        // put knight1 at place(0,0) on the gameboard
-        configuration.addInitialPiece(knight1, 0, 0);
-        // put knight2 at place(1,0) on the gameboard
-        configuration.addInitialPiece(knight2, 1, 0);
-        return new JesonMor(configuration);
+        JesonMor.addInitialPiece(knight1, 0, 0);
+        JesonMor.addInitialPiece(knight2, 1, 0);
+        return new JesonMor(JesonMor);
     }
 
     public static void main(String[] args) {

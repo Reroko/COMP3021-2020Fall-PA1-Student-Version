@@ -6,6 +6,7 @@ package castle.comp3021.assignment.protocol;
  * <p>
  * x and y coordinates of a place on gameboard are two fields of this class.
  */
+
 public record Place(int x, int y) implements Cloneable {
     @Override
     public Place clone() throws CloneNotSupportedException {

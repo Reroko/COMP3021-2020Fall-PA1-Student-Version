@@ -31,7 +31,7 @@ public class Archer extends Piece {
      * Given the {@link Game} object and the {@link Place} that current knight piece locates, this method should
      * return ALL VALID {@link Move}s according to the current {@link Place} of this knight piece.
      * All the returned {@link Move} should have source equal to the source parameter.
-     * <p>
+     * <p
      * Hint: you should consider corner cases when the {@link Move} is not valid on the gameboard.
      * Several tests are provided and your implementation should pass them.
      * <p>
