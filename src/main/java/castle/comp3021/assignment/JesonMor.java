@@ -136,8 +136,33 @@ public class JesonMor extends Game {
 
         for(int i=0; i<length; i++){
             if(move.equals(availableMove[i])){
-                player.setScore(score+3);
-                break;
+                if(piece.getLabel()=='K') {
+                    player.setScore(score+3);
+                    break;
+                }
+                else{
+                    int x1=move.getSource().x();
+                    int y1=move.getSource().y();
+                    int x2=move.getDestination().x();
+                    int y2=move.getDestination().y();
+
+                    if(x1==x2){
+                        if(y1<y2){
+                            player.setScore(score+y2-y1);
+                        }
+                        else{
+                            player.setScore(score+y1-y2);
+                        }
+                    }
+                    else{
+                        if(x1<x2){
+                            player.setScore(score+x2-x1);
+                        }
+                        else{
+                            player.setScore(score+x1-x2);
+                        }
+                    }
+                }
             }
         }
     }
