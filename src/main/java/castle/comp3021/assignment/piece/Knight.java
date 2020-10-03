@@ -1,10 +1,6 @@
 package castle.comp3021.assignment.piece;
 
-import castle.comp3021.assignment.protocol.Game;
-import castle.comp3021.assignment.protocol.Move;
-import castle.comp3021.assignment.protocol.Piece;
-import castle.comp3021.assignment.protocol.Place;
-import castle.comp3021.assignment.protocol.Player;
+import castle.comp3021.assignment.protocol.*;
 
 /**
  * Knight piece that moves similar to knight in chess.
@@ -40,6 +36,149 @@ public class Knight extends Piece {
     @Override
     public Move[] getAvailableMoves(Game game, Place source) {
         // TODO student implementation
-        return new Move[0];
+
+        Move[] move = new Move[8];
+        int count=0;
+        Configuration conf = game.getConfiguration();
+        var size = conf.getSize();
+
+        if((source.x()+1<size)&&(source.y()+2<size)){
+            Place destination = new Place(source.x()+1, source.y()+2);
+
+            if(game.getPiece(destination)==null){
+                move[0] = new Move(source,destination);
+                count++;
+            }
+            else if(game.getPiece(destination).getPlayer()==game.getPiece(source).getPlayer()) {
+                move[0]=null;
+            }
+            else{
+                move[0] = new Move(source, destination);
+                count++;
+            }
+        }
+
+        if((source.x()+1<size)&&(source.y()-2>=0)){
+            Place destination = new Place(source.x()+1, source.y()-2);
+
+            if(game.getPiece(destination)==null){
+                move[1] = new Move(source,destination);
+                count++;
+            }
+            else if(game.getPiece(destination).getPlayer()==game.getPiece(source).getPlayer()) {
+                move[1]=null;
+            }
+            else{
+                move[1] = new Move(source, destination);
+                count++;
+            }
+        }
+
+        if((source.x()-1>=0)&&(source.y()+2<size)){
+            Place destination = new Place(source.x()-1, source.y()+2);
+
+            if(game.getPiece(destination)==null){
+                move[2] = new Move(source,destination);
+                count++;
+            }
+            else if(game.getPiece(destination).getPlayer()==game.getPiece(source).getPlayer()) {
+                move[2]=null;
+            }
+            else{
+                move[2] = new Move(source, destination);
+                count++;
+            }
+        }
+
+        if((source.x()-1>=0)&&(source.y()-2>=0)){
+            Place destination = new Place(source.x()-1, source.y()-2);
+
+            if(game.getPiece(destination)==null){
+                move[3] = new Move(source,destination);
+                count++;
+            }
+            else if(game.getPiece(destination).getPlayer()==game.getPiece(source).getPlayer()) {
+                move[3]=null;
+            }
+            else{
+                move[3] = new Move(source, destination);
+                count++;
+            }
+        }
+
+        if((source.x()+2<size)&&(source.y()+1<size)){
+            Place destination = new Place(source.x()+2, source.y()+1);
+
+            if(game.getPiece(destination)==null){
+                move[4] = new Move(source,destination);
+                count++;
+            }
+            else if(game.getPiece(destination).getPlayer()==game.getPiece(source).getPlayer()) {
+                move[4]=null;
+            }
+            else{
+                move[4] = new Move(source, destination);
+                count++;
+            }
+        }
+
+        if((source.x()+2<size)&&(source.y()-1>=0)){
+            Place destination = new Place(source.x()+2, source.y()-1);
+
+            if(game.getPiece(destination)==null){
+                move[5] = new Move(source,destination);
+                count++;
+            }
+            else if(game.getPiece(destination).getPlayer()==game.getPiece(source).getPlayer()) {
+                move[5]=null;
+            }
+            else{
+                move[5] = new Move(source, destination);
+                count++;
+            }
+        }
+
+        if((source.x()-2>=0)&&(source.y()+1<size)){
+            Place destination = new Place(source.x()-2, source.y()+1);
+
+            if(game.getPiece(destination)==null){
+                move[6] = new Move(source,destination);
+                count++;
+            }
+            else if(game.getPiece(destination).getPlayer()==game.getPiece(source).getPlayer()) {
+                move[6]=null;
+            }
+            else{
+                move[6] = new Move(source, destination);
+                count++;
+            }
+        }
+
+        if((source.x()-2>=0)&&(source.y()-1>=0)){
+            Place destination = new Place(source.x()-2, source.y()-1);
+
+            if(game.getPiece(destination)==null){
+                move[7] = new Move(source,destination);
+                count++;
+            }
+            else if(game.getPiece(destination).getPlayer()==game.getPiece(source).getPlayer()) {
+                move[7]=null;
+            }
+            else{
+                move[7] = new Move(source, destination);
+                count++;
+            }
+        }
+
+        Move[] validMove=new Move[count];
+
+        for(int i=0;i<=7;i++){
+            if(move[i]!=null){
+                validMove[count-1]=move[i];
+                count--;
+            }
+        }
+
+        return validMove;
     }
 }

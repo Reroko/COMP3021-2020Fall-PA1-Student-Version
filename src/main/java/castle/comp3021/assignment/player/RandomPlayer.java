@@ -1,10 +1,9 @@
 package castle.comp3021.assignment.player;
 
-import castle.comp3021.assignment.protocol.Game;
-import castle.comp3021.assignment.protocol.Color;
-import castle.comp3021.assignment.protocol.Move;
-import castle.comp3021.assignment.protocol.Player;
+import castle.comp3021.assignment.protocol.*;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Random;
 
 /**
  * A computer player that makes a move randomly.
@@ -34,6 +33,19 @@ public class RandomPlayer extends Player {
     @Override
     public @NotNull Move nextMove(Game game, Move[] availableMoves) {
         // TODO student implementation
-        return availableMoves[0];
+        while(true) {
+            int length = availableMoves.length;
+            int random = new Random().nextInt(length);
+            if(game.getNumMoves()<2*game.getConfiguration().getNumMovesProtection()) {
+                if (game.getPiece(availableMoves[random].getDestination()) == null) {
+                    return availableMoves[random];
+                }
+                else continue;
+            }
+            else {
+                return availableMoves[random];
+            }
+        }
     }
+
 }

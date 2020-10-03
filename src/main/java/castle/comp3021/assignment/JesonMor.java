@@ -3,6 +3,7 @@ package castle.comp3021.assignment;
 import castle.comp3021.assignment.protocol.*;
 import org.jetbrains.annotations.NotNull;
 
+
 /**
  * This class extends {@link Game}, implementing the game logic of JesonMor game.
  * Student needs to implement methods in this class to make the game work.
@@ -40,6 +41,15 @@ public class JesonMor extends Game {
         this.refreshOutput();
         while (true) {
             // TODO student implementation starts here
+            this.currentPlayer = configuration.getPlayers()[numMoves%2];
+            Move nextMove=this.currentPlayer.nextMove(this,getAvailableMoves(this.currentPlayer));
+            updateScore(currentPlayer,getPiece(nextMove.getSource()),nextMove);
+            movePiece(nextMove);
+            numMoves++;
+            if(numMoves>2*this.configuration.getNumMovesProtection()) {
+                winner=getWinner(this.currentPlayer, getPiece(nextMove.getSource()), nextMove);
+            }
+            this.refreshOutput();
 
             // student implementation ends here
             if (winner != null) {
@@ -67,7 +77,38 @@ public class JesonMor extends Game {
     @Override
     public Player getWinner(Player lastPlayer, Piece lastPiece, Move lastMove) {
         // TODO student implementation
-        return null;
+        Player winner=null;
+        int size=this.configuration.getSize();
+
+        if (lastMove == null) {
+            if (configuration.getPlayers()[0].getScore() < configuration.getPlayers()[1].getScore()) {
+                winner = configuration.getPlayers()[0];
+            } else if (configuration.getPlayers()[0].getScore() > configuration.getPlayers()[1].getScore()) {
+                winner = configuration.getPlayers()[1];
+            } else
+                winner = lastPlayer;
+        }
+
+        if(lastMove!=null) {
+            if ((lastMove.getSource().x()==(size - 1) / 2) && (lastMove.getSource().y() == (size - 1) / 2)) {
+                winner = lastPlayer;
+            }
+        }
+
+        if(winner==null) {
+            int piece = 0;
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    if ((getPiece(new Place(i, j)) != null) && (getPiece(new Place(i, j)).getPlayer() != lastPlayer)) {
+                        piece++;
+                    }
+                }
+            }
+            if (piece == 0) {
+                winner = lastPlayer;
+            }
+        }
+        return winner;
     }
 
     /**
@@ -89,6 +130,16 @@ public class JesonMor extends Game {
      */
     public void updateScore(Player player, Piece piece, Move move) {
         // TODO student implementation
+        int score = player.getScore();
+        Move[] availableMove = getAvailableMoves(player);
+        int length = availableMove.length;
+
+        for(int i=0; i<length; i++){
+            if(move.equals(availableMove[i])){
+                player.setScore(score+3);
+                break;
+            }
+        }
     }
 
 
@@ -109,6 +160,8 @@ public class JesonMor extends Game {
      */
     public void movePiece(@NotNull Move move) {
         // TODO student implementation
+        this.board[move.getDestination().x()][move.getDestination().y()]=this.getPiece(move.getSource());
+        this.board[move.getSource().x()][move.getSource().y()]=null;
     }
 
     /**
@@ -124,6 +177,32 @@ public class JesonMor extends Game {
      */
     public @NotNull Move[] getAvailableMoves(Player player) {
         // TODO student implementation
-        return new Move[0];
+        int size=configuration.getSize();
+        Move[] availableMoves=null;
+        int length1;
+        int length2;
+
+        for(int i=0;i<size;i++){
+            for(int j=0;j<size;j++){
+                if((board[i][j]!=null)&&(board[i][j].getPlayer()==currentPlayer)) {
+                    Move[] moves = board[i][j].getAvailableMoves(this, new Place(i, j));
+                    if (availableMoves == null) {
+                        availableMoves=moves;
+                    }
+                    else {
+                        length1 = availableMoves.length;
+
+                        length2 = moves.length;
+                        Move[] temp = new Move[length1 + length2];
+
+                        System.arraycopy(availableMoves, 0, temp, 0, length1);
+                        System.arraycopy(moves, 0, temp, length1, length2);
+
+                        availableMoves = temp;
+                    }
+                }
+            }
+        }
+        return availableMoves;
     }
 }
