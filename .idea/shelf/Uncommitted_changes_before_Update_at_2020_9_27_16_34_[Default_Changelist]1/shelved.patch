@@ -1,0 +1,46 @@
+Index: src/main/java/castle/comp3021/assignment/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package castle.comp3021.assignment;\r\n\r\nimport castle.comp3021.assignment.piece.Knight;\r\nimport castle.comp3021.assignment.player.ConsolePlayer;\r\nimport castle.comp3021.assignment.player.RandomPlayer;\r\nimport castle.comp3021.assignment.protocol.Configuration;\r\nimport castle.comp3021.assignment.protocol.Game;\r\nimport castle.comp3021.assignment.protocol.Player;\r\n\r\npublic class Main {\r\n    /**\r\n     * Create and initialize a game.\r\n     * Student should first construct a {@link Configuration} object with two players.\r\n     * Then add initial pieces to gameboard in the {@link Configuration} object.\r\n     * After that, use this {@link Configuration} object to construct a {@link JesonMor} game object\r\n     * This method should return the created {@link JesonMor} object.\r\n     * <p>\r\n     * The initialized gameboard should comply to the requirements of the assignment.\r\n     * The user player should be put\r\n     * first in the player array in the configuration and user player should moves first.\r\n     *\r\n     * <strong>Attention: The code in this method is only an example of using {@link Configuration} to initialize\r\n     * gameboard, Students should remove them and implement on their own.</strong>\r\n     *\r\n     * @param size               size of gameboard\r\n     * @param numMovesProtection number of moves with capture protection\r\n     * @return the game object\r\n     */\r\n    public static Game createGame(int size, int numMovesProtection) {\r\n        // TODO student implementation\r\n        // The following lines are example of constructing a game object, you may modify them as you wish.\r\n        var userPlayer = new ConsolePlayer(\"UserPlayer\");\r\n        var computerPlayer = new RandomPlayer(\"ComputerPlayer\");\r\n        // we give\r\n        Configuration configuration = new Configuration(size, new Player[]{userPlayer, computerPlayer}, numMovesProtection);\r\n        var knight1 = new Knight(userPlayer);\r\n        var knight2 = new Knight(computerPlayer);\r\n        // put knight1 at place(0,0) on the gameboard\r\n        configuration.addInitialPiece(knight1, 0, 0);\r\n        // put knight2 at place(1,0) on the gameboard\r\n        configuration.addInitialPiece(knight2, 1, 0);\r\n        return new JesonMor(configuration);\r\n    }\r\n\r\n    public static void main(String[] args) {\r\n        // start the game\r\n        var helper = \"two integer arguments are required specifying size of gameboard and number of moves with capturing protection \";\r\n        if (args.length < 2) {\r\n            throw new IllegalArgumentException(helper);\r\n        }\r\n        int size;\r\n        int numMovesProtection;\r\n        try {\r\n            size = Integer.parseInt(args[0]);\r\n        } catch (NumberFormatException e) {\r\n            throw new IllegalArgumentException(\"the first argument is not a number\");\r\n        }\r\n        try {\r\n            numMovesProtection = Integer.parseInt(args[1]);\r\n        } catch (NumberFormatException e) {\r\n            throw new IllegalArgumentException(\"the second argument is not a number\");\r\n        }\r\n        createGame(size, numMovesProtection).start();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/castle/comp3021/assignment/Main.java	(revision edae0ecec980ba1228836d3b7a07ff278e7038f9)
++++ src/main/java/castle/comp3021/assignment/Main.java	(date 1600525024363)
+@@ -32,14 +32,14 @@
+         var userPlayer = new ConsolePlayer("UserPlayer");
+         var computerPlayer = new RandomPlayer("ComputerPlayer");
+         // we give
+-        Configuration configuration = new Configuration(size, new Player[]{userPlayer, computerPlayer}, numMovesProtection);
++        Configuration JesonMor = new Configuration(size, new Player[]{userPlayer, computerPlayer}, numMovesProtection);
+         var knight1 = new Knight(userPlayer);
+         var knight2 = new Knight(computerPlayer);
+         // put knight1 at place(0,0) on the gameboard
+-        configuration.addInitialPiece(knight1, 0, 0);
++        JesonMor.addInitialPiece(knight1, 0, 0);
+         // put knight2 at place(1,0) on the gameboard
+-        configuration.addInitialPiece(knight2, 1, 0);
+-        return new JesonMor(configuration);
++        JesonMor.addInitialPiece(knight2, 1, 0);
++        return new JesonMor(JesonMor);
+     }
+ 
+     public static void main(String[] args) {
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_14_PREVIEW\" default=\"false\" project-jdk-name=\"14\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision edae0ecec980ba1228836d3b7a07ff278e7038f9)
++++ .idea/misc.xml	(date 1600517871964)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_14_PREVIEW" default="false" project-jdk-name="14" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_10" default="false" project-jdk-name="14" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
